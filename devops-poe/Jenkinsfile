@@ -24,7 +24,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t shweta333/devops-poe:latest -f devops-poe/Dockerfile ."
+                    sh "docker build -t shweta333/ESE_2024:latest -f devops-poe/Dockerfile ."
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'shweta333', passwordVariable: 'Sugure@4488')]) {
-                        sh "echo Shweta@docker19 | docker login -u shweta333 --password-stdin"
+                        sh "echo Sugure@4488 | docker login -u shweta333 --password-stdin"
                     }
                 }
             }
