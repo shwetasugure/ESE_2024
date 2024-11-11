@@ -1,10 +1,7 @@
 
 pipeline {
     agent any
-    tools {
-        git 'C:\\Program Files\\Git\\cmd\\git.exe'
-    }
-
+    
     environment {
         DOCKER_IMAGE = "shweta333/my-app:latest" // Replace with your Docker Hub repository name
         DOCKER_CREDENTIALS_ID = "dockerhub-creds"         // Jenkins credentials ID for Docker Hub
