@@ -1,6 +1,9 @@
 
 pipeline {
     agent any
+    tools {
+        git 'C:\\Program Files\\Git\\cmd\\git.exe'
+    }
 
     environment {
         DOCKER_IMAGE = "shweta333/my-app:latest" // Replace with your Docker Hub repository name
