@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_HUB_REPO = 'sanskar2607/devops-poe'
+        IMAGE_TAG = "latest"
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git url: 'https://github.com/Scar2603/devops-poe.git', branch: 'main'
+            }
+        }
+
+        stage('Build Java Application') {
+            steps {
+                dir('devops-poe') {
+                    sh 'mvn clean package'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh "docker build -t sanskar2607/devops-poe:latest -f devops-poe/Dockerfile ."
+                }
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'sanskar2607', passwordVariable: 'Sanskar@docker19')]) {
+                        sh "echo Sanskar@docker19 | docker login -u sanskar2607 --password-stdin"
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    sh "docker push sanskar2607/devops-poe:latest"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                sh 'docker rmi sanskar2607/devops-poe:latest || true'
+            }
+        }
+    }
+}
